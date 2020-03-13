@@ -21,6 +21,23 @@ class App extends Component {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     };
+
+    checkRequired = inputArray => {
+        inputArray.forEach(input => {
+            if (input.value.trim() === '') {
+                this.showError(
+                    input,
+                    `${this.getFeildName(input)} is required`
+                );
+            } else {
+                this.showSuccess(input);
+            }
+        });
+    };
+
+    getFeildName = input => {
+        return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+    };
     //Event lesner
     handleSubmit = e => {
         e.preventDefault();
@@ -29,31 +46,33 @@ class App extends Component {
         const password = document.getElementById('password');
         const password2 = document.getElementById('password2');
 
-        if (this.state.username === '') {
-            this.showError(username, 'Username is required');
-        } else {
-            this.showSuccess(username);
-        }
+        this.checkRequired([username, email, password2, password]);
 
-        if (email.value === '') {
-            this.showError(email, 'Email is required');
-        } else if (!this.validEmai(email.value)) {
-            this.showError(email, 'Email is correct');
-        } else {
-            this.showSuccess(email);
-        }
+        // if (this.state.username === '') {
+        //     this.showError(username, 'Username is required');
+        // } else {
+        //     this.showSuccess(username);
+        // }
 
-        if (password.value === '') {
-            this.showError(password, 'Email is required');
-        } else {
-            this.showSuccess(password);
-        }
+        // if (email.value === '') {
+        //     this.showError(email, 'Email is required');
+        // } else if (!this.validEmai(email.value)) {
+        //     this.showError(email, 'Email is correct');
+        // } else {
+        //     this.showSuccess(email);
+        // }
 
-        if (password2.value === '') {
-            this.showError(password2, 'Email is required');
-        } else {
-            this.showSuccess(password2);
-        }
+        // if (password.value === '') {
+        //     this.showError(password, 'Email is required');
+        // } else {
+        //     this.showSuccess(password);
+        // }
+
+        // if (password2.value === '') {
+        //     this.showError(password2, 'Email is required');
+        // } else {
+        //     this.showSuccess(password2);
+        // }
     };
 
     render() {
